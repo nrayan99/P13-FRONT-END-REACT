@@ -5,7 +5,7 @@ function DefaultLayout({ children } : { children: React.ReactNode }) {
   return (
     <>
       <Header />
-      <main className="main bg-dark">{children}</main>
+      <main className="main">{children}</main>
       <Footer />
     </>
   );

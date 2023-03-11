@@ -1,4 +1,15 @@
+import { useEffect } from "react";
+
 function User() {
+    
+  useEffect(() => {
+    document.getElementsByTagName("main")[0].classList.add("bg-dark");
+
+    return () => {
+      document.getElementsByTagName("main")[0].classList.remove("bg-dark");
+    };
+  });
+
   return (
     <>
       <div className="header">
