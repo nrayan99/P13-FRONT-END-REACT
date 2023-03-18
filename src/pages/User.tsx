@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import Account from "../components/Account";
 
 function User() {
     
@@ -9,6 +10,24 @@ function User() {
       document.getElementsByTagName("main")[0].classList.remove("bg-dark");
     };
   });
+
+  const accounts = useMemo( () => [
+    {
+      title: "Argent Bank Checking (x8349)",
+      amount: "2,082.79",
+      amountDescription: "Available Balance",
+    },
+    {
+      title: "Argent Bank Savings (x6712)",
+      amount: "10,928.42",
+      amountDescription: "Available Balance",
+    },
+    {
+      title: "Argent Bank Credit Card (x8349)",
+      amount: "184.30",
+      amountDescription: "Current Balance",
+    },
+  ], []);
 
   return (
     <>
@@ -21,36 +40,8 @@ function User() {
         <button className="edit-button">Edit Name</button>
       </div>
       <h2 className="sr-only">Accounts</h2>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-          <p className="account-amount">$2,082.79</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-          <p className="account-amount">$10,928.42</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-          <p className="account-amount">$184.30</p>
-          <p className="account-amount-description">Current Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
+      {accounts.map((account, index) => ( 
+        <Account {...account} key={index} />))}
     </>
   );
 }
