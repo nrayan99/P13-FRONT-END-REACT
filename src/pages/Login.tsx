@@ -1,11 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateJwt } from "../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.getElementsByTagName("main")[0].classList.add("bg-dark");
@@ -27,6 +32,8 @@ function Login() {
       if (rememberMe) {
         localStorage.setItem("token", data.body.token);
       }
+      dispatch(updateJwt(data.body.token));
+      navigate("/profile");
     } catch (err) {
       setError("User not found");
       console.log(err);

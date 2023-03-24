@@ -1,8 +1,10 @@
 import argentBlankLogo from "../assets/argentBankLogo.png";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { selectFirstName } from "../features/user/userSlice";
+import { useAppSelector } from "../app/hooks";
 
 function Header() {
+  const firstName = useAppSelector(selectFirstName);
   const [isSignedIn, setIsSignedIn] = useState(true);
 
   return (
@@ -20,7 +22,7 @@ function Header() {
           <>
             <a className="main-nav-item" href="/user">
               <i className="fa fa-user-circle"></i>
-            Tony
+              {firstName}
             </a>
             <a className="main-nav-item" href="/">
               <i className="fa fa-sign-out"></i>
