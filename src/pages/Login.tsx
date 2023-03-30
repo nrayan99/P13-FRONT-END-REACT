@@ -1,7 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateJwt } from "../features/user/userSlice";
+import {
+  updateJwt,
+  updateFirstName,
+  updateLastName,
+} from "../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -22,17 +26,27 @@ function Login() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(username, password, rememberMe);
     setError("");
     try {
-      const { data } = await axios.post("user/login" , {
+      const { data } = await axios.post("user/login", {
         email: username,
         password,
       });
       if (rememberMe) {
         localStorage.setItem("token", data.body.token);
       }
+      console.log(data)
       dispatch(updateJwt(data.body.token));
+      const { data: user } = await axios.post("user/profile", {
+      },
+        {
+          headers: {
+            Authorization: `Bearer ${data.body.token}`,
+          },
+        }
+      );
+      dispatch(updateFirstName(user.body.firstName));
+      dispatch(updateLastName(user.body.lastName));
       navigate("/profile");
     } catch (err) {
       setError("User not found");

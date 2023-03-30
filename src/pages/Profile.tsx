@@ -3,15 +3,18 @@ import Account from "../components/Account";
 import {
   selectFirstName,
   selectLastName,
+  selectJwt,
   updateFirstName,
   updateLastName,
 } from "../features/user/userSlice";
 
 import { useAppSelector, useAppDispatch } from "../app/hooks";
+import axios from "axios";
 
 function User() {
   const firstName = useAppSelector(selectFirstName);
   const lastName = useAppSelector(selectLastName);
+  const jwt = useAppSelector(selectJwt);
   const dispatch = useAppDispatch();
 
   const [editFirstName, setEditFirstName] = useState<string>("");
@@ -46,13 +49,24 @@ function User() {
     };
   });
 
-  function handleChange() {
+  async function handleChange() {
     if (editFirstName.length) {
       dispatch(updateFirstName(editFirstName));
     }
     if (editLastName.length) {
       dispatch(updateLastName(editLastName));
     }
+    await axios.put("user/profile", {
+      firstName: editFirstName.length ? editFirstName : firstName,
+      lastName: editLastName.length ? editLastName : lastName,
+    },
+      {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      }
+    );
+
     setShowEdit(false);
   }
 

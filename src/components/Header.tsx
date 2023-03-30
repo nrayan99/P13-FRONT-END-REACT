@@ -1,39 +1,46 @@
 import argentBlankLogo from "../assets/argentBankLogo.png";
-import { useState } from "react";
-import { selectFirstName } from "../features/user/userSlice";
-import { useAppSelector } from "../app/hooks";
+import { selectFirstName, selectJwt, updateJwt } from "../features/user/userSlice";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
+import { Link } from "react-router-dom";
 
 function Header() {
   const firstName = useAppSelector(selectFirstName);
-  const [isSignedIn, setIsSignedIn] = useState(true);
+  const jwt = useAppSelector(selectJwt);
+  const dispatch = useAppDispatch();
+
+  const handleSignOut = () => {
+    dispatch(updateJwt(""));
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
 
   return (
     <nav className="main-nav">
-      <a className="main-nav-logo" href="./index.html">
+      <Link to="/" >
         <img
           className="main-nav-logo-image"
           src={argentBlankLogo}
           alt="Argent Bank Logo"
         />
         <h1 className="sr-only">Argent Bank</h1>
-      </a>
+      </Link>
       <div>
-        {isSignedIn ? (
+        {jwt ? (
           <>
-            <a className="main-nav-item" href="/user">
+            <Link className="main-nav-item" to="/profile">
               <i className="fa fa-user-circle"></i>
               {firstName}
-            </a>
-            <a className="main-nav-item" href="/">
+            </Link>
+            <div className="main-nav-item" onClick={ () => handleSignOut()}>
               <i className="fa fa-sign-out"></i>
               Sign Out
-            </a>
+            </div>
           </>
         ) : (
-          <a className="main-nav-item" href="/">
+          <Link className="main-nav-item" to="/login">
             <i className="fa fa-user-circle"></i>
             Sign In
-          </a>
+          </Link>
         )}
       </div>
     </nav>
