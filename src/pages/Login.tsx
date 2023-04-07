@@ -5,6 +5,7 @@ import {
   updateJwt,
   updateFirstName,
   updateLastName,
+  updateIsLoggedIn,
 } from "../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -47,6 +48,7 @@ function Login() {
       );
       dispatch(updateFirstName(user.body.firstName));
       dispatch(updateLastName(user.body.lastName));
+      dispatch(updateIsLoggedIn(true))
       navigate("/profile");
     } catch (err) {
       setError("User not found");

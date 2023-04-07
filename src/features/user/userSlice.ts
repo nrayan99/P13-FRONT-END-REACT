@@ -5,12 +5,14 @@ export interface UserState {
   firstName: string;
   lastName: string;
   jwt: string;
+  isLoggedIn: boolean;
 }
 
 const initialState: UserState = {
   firstName: '',
   lastName: '',
-  jwt: ''
+  jwt: '',
+  isLoggedIn: false,
 };
 
 export const userSlice = createSlice({
@@ -26,11 +28,14 @@ export const userSlice = createSlice({
     },
     updateJwt: (state, action: PayloadAction<string>) => {
       state.jwt = action.payload
+    },
+    updateIsLoggedIn: (state, action: PayloadAction<boolean>) => {
+      state.isLoggedIn = action.payload
     }
   },
 });
 
-export const { updateFirstName, updateLastName, updateJwt } = userSlice.actions;
+export const { updateFirstName, updateLastName, updateJwt, updateIsLoggedIn } = userSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
@@ -38,5 +43,6 @@ export const { updateFirstName, updateLastName, updateJwt } = userSlice.actions;
 export const selectFirstName = (state: RootState) => state.user.firstName;
 export const selectLastName = (state: RootState) => state.user.lastName;
 export const selectJwt = (state: RootState) => state.user.jwt;
+export const selectIsLoggedIn = (state: RootState) => state.user.isLoggedIn;
 
 export default userSlice.reducer;
