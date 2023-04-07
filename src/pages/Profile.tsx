@@ -56,6 +56,10 @@ function User() {
     if (editLastName.length) {
       dispatch(updateLastName(editLastName));
     }
+    if (!editFirstName.length && !editLastName.length) {
+      setShowEdit(false);
+      return;
+    }
     await axios.put("user/profile", {
       firstName: editFirstName.length ? editFirstName : firstName,
       lastName: editLastName.length ? editLastName : lastName,
