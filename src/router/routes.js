@@ -14,7 +14,13 @@ const routes = [
         children: [
           {
             path: "/",
-            element: <Home />,
+            element: <PrivateRoute />,
+            children: [
+              {
+                path: "",
+                element: <Home />,
+              },
+            ],
           },
           {
             path: "/profile",
@@ -29,12 +35,12 @@ const routes = [
           {
             path: "/login",
             element: <PrivateRoute />,
-            children : [
+            children: [
               {
                 path: "",
                 element: <Login />,
-              }
-            ]
+              },
+            ],
           },
         ],
       },

@@ -11,6 +11,7 @@ function Header() {
   const handleSignOut = () => {
     dispatch(updateJwt(""));
     localStorage.removeItem("token");
+    sessionStorage.removeItem("token")
     window.location.reload();
   };
 

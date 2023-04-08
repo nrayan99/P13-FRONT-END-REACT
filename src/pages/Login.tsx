@@ -36,10 +36,11 @@ function Login() {
       if (rememberMe) {
         localStorage.setItem("token", data.body.token);
       }
-      console.log(data)
+      console.log(data);
       dispatch(updateJwt(data.body.token));
-      const { data: user } = await axios.post("user/profile", {
-      },
+      const { data: user } = await axios.post(
+        "user/profile",
+        {},
         {
           headers: {
             Authorization: `Bearer ${data.body.token}`,
@@ -48,7 +49,8 @@ function Login() {
       );
       dispatch(updateFirstName(user.body.firstName));
       dispatch(updateLastName(user.body.lastName));
-      dispatch(updateIsLoggedIn(true))
+      dispatch(updateIsLoggedIn(true));
+      sessionStorage.setItem("token", data.body.token);
       navigate("/profile");
     } catch (err) {
       setError("User not found");

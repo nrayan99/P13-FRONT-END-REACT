@@ -16,7 +16,10 @@ function AuthCheck() {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useAppDispatch();
   const token =
-    useAppSelector(selectJwt) || localStorage.getItem("token") || "";
+    useAppSelector(selectJwt) ||
+    localStorage.getItem("token") ||
+    sessionStorage.getItem("token") ||
+    "";
   useLayoutEffect(() => {
     async function call() {
       try {
