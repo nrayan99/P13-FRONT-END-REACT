@@ -1,6 +1,7 @@
-# Getting Started with Create React App
+## This is the frontend of the Argent BANK project
+you can find the backend there : https://github.com/OpenClassrooms-Student-Center/Project-10-Bank-API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+
 
 ## Available Scripts
 
