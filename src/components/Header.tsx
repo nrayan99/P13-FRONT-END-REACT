@@ -1,18 +1,20 @@
 import argentBlankLogo from "../assets/argentBankLogo.png";
-import { selectFirstName, selectJwt, updateJwt } from "../features/user/userSlice";
+import { selectFirstName, selectJwt, updateJwt, updateIsLoggedIn } from "../features/user/userSlice";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Header() {
   const firstName = useAppSelector(selectFirstName);
   const jwt = useAppSelector(selectJwt);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate()
 
   const handleSignOut = () => {
     dispatch(updateJwt(""));
     localStorage.removeItem("token");
     sessionStorage.removeItem("token")
-    window.location.reload();
+    dispatch(updateIsLoggedIn(false));
+    navigate("/")
   };
 
   return (
